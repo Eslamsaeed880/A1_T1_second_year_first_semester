@@ -19,6 +19,18 @@ class objectives
 private:
     string choice;
 
+    bool digits(string s)
+    {
+        for(auto i : s)
+        {
+            if(!isdigit(i))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     bool IsHe(string s)
     {
         string s1;
@@ -147,13 +159,100 @@ private:
         }
     }
 
-    
+    void Top10Players()
+    {
+        string NumOfPlayers;
+        cout << "Please Input the number of players You want.\n";
+        cin >> NumOfPlayers;
+        vector<pair<int,string>> scores;
+
+        while(!digits(NumOfPlayers))
+        {
+            cout << "Please Input a real number\n";
+            cin >> NumOfPlayers;
+        }
+
+        for(int i = 1; i <= stoi(NumOfPlayers); i++)
+        {
+            string player;
+            string score;
+
+            cout << "Input the Name of the player and the score of him\n";
+            cout << "Player " << i << ": ";
+            cin >> player >> score;
+
+            while(!digits(score))
+            {
+                cout << "Please Input a real number\n";
+                cin >> score;
+            }
+
+            scores.emplace_back(stoi(score), player);
+            sort(scores.begin(), scores.end());
+            reverse(scores.begin(), scores.end());
+            if(scores.size() > 10)
+            {
+                scores.pop_back();
+            }
+        }
+
+        cout << "Top 10 Players\n";
+        for(int i = 1; i <= stoi(NumOfPlayers); i++)
+        {
+            cout << "Player " << i << ": " << scores[i - 1].second << ' ' << scores[i - 1].first << '\n';
+        }
+
+        while(true)
+        {
+            string YesOrNo;
+            do
+            {
+                cout << "Do You wanna know highest score of any player\n";
+                cout << "1) Yes\n2) No\n";
+                cin >> YesOrNo;
+            }
+            while(YesOrNo != "1" && YesOrNo != "2");
+
+            if(YesOrNo == "2")
+            {
+                return;
+            }
+            else
+            {
+                string name;
+                bool exist = false;
+                cout << "What's his name ?\n";
+                cin >> name;
+
+                for(int i = 0; i < scores.size(); i++)
+                {
+                    if(scores[i].second == name)
+                    {
+                        exist = true;
+                        cout << scores[i].second << " " << scores[i].first << '\n';
+                        break;
+                    }
+                }
+
+                if(!exist)
+                {
+                    cout << "Your player isn't exist\n";
+                }
+            }
+        }
+
+
+    }
 
     void ManageChoices()
     {
         if(choice == "1")
         {
             MaleToInclusive();
+        }
+        if(choice == "2")
+        {
+            Top10Players();
         }
     }
 
