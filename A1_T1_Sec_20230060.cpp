@@ -19,17 +19,141 @@ class objectives
 private:
     string choice;
 
+    bool IsHe(string s)
+    {
+        string s1;
+        for(int i = 0; i < s.size(); i++)
+        {
+            s[i] = tolower(s[i]);
+
+            if(isalpha(s[i]))
+            {
+                s1 += s[i];
+            }
+            else if(isdigit(s[i]))
+            {
+                return false;
+            }
+            else if(ispunct(s[i]))
+            {
+                if(i != 0 && i != s.size() - 1)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return s1 == "he";
+    }
+
+    bool IsHim(string s)
+    {
+        string s1;
+        for(int i = 0; i < s.size(); i++)
+        {
+            s[i] = tolower(s[i]);
+
+            if(isalpha(s[i]))
+            {
+                s1 += s[i];
+            }
+            else if(isdigit(s[i]))
+            {
+                return false;
+            }
+            else if(ispunct(s[i]))
+            {
+                if(i != 0 && i != s.size() - 1)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return (s1 == "him" || s1 == "his");
+    }
+
+    void PunctDetict(string s)
+    {
+        if(IsHe(s))
+        {
+            if(ispunct(s[s.size() - 1]))
+            {
+                for(int i = 0; i < s.size() - 1; i++)
+                {
+                    cout << s[i];
+                }
+                cout << " or she" << s.back() << " ";
+            }
+            else
+            {
+                cout << s << " or she ";
+            }
+        }
+        else if(IsHim(s))
+        {
+            if(ispunct(s[s.size() - 1]))
+            {
+                for(int i = 0; i < s.size() - 1; i++)
+                {
+                    cout << s[i];
+                }
+                cout << " or her" << s.back() << " ";
+            }
+            else
+            {
+                cout << s << " or her ";
+            }
+        }
+    }
+
     void MaleToInclusive()
     {
+        cout << "Input a sentence to convert from Male to Inclusive\n";
         string sentence;
-        string newsentence;
+        string newword;
+        vector<string> words;
         getline(cin, sentence);
 
-        int i = 0, j = 0;
-
-        while(i < sentence.size() && j < sentence.size())
+        for(int i = 0; i < sentence.size(); i++)
         {
-            if()
+            if(sentence[i] != ' ')
+            {
+                newword += sentence[i];
+            }
+            else
+            {
+                words.push_back(newword);
+                newword = "";
+            }
+        }
+
+        words.push_back(newword);
+
+        for(int i = 0; i < words.size(); i++)
+        {
+            if(IsHe(words[i]))
+            {
+                PunctDetict(words[i]);
+            }
+            else if(IsHim(words[i]))
+            {
+                PunctDetict(words[i]);
+            }
+            else
+            {
+                cout << words[i] << " ";
+            }
+        }
+    }
+
+    
+
+    void ManageChoices()
+    {
+        if(choice == "1")
+        {
+            MaleToInclusive();
         }
     }
 
@@ -52,6 +176,8 @@ public:
             cin >> choice;
         }
         while(choice < "1" || choice > "4");
+        cin.ignore();
+        ManageChoices();
     }
 
 
