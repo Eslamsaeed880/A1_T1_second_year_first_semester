@@ -242,8 +242,6 @@ private:
         }
     }
 
-    int m = 0;
-
     void PrintLine(int n)
     {
         static int i = 0;
@@ -255,37 +253,23 @@ private:
                 cout << ' ';
             }
             cout << "*\n";
+            i++;
+            return;
         }
         else if(i > n)
         {
-            if(i > n)
+
+            for(int j = 0; j < i - n + 1; j++)
             {
-                for(int j = 0; j < i - n + 1; j++)
-                {
-                    cout << ' ';
-                }
+                cout << ' ';
             }
-            else
-            {
-                for(int j = 0; j < i - 1; j++)
-                {
-                    cout << ' ';
-                }
-            }
-            for(int j = 0; j < n; j++)
-            {
-                cout << "* ";
-            }
-            cout << "\n";
         }
-        else
+
+        for(int j = 0; j < n; j++)
         {
-            for(int j = 0; j < n; j++)
-            {
-                cout << "* ";
-            }
-            cout << "\n";
+            cout << "* ";
         }
+        cout << "\n";
 
         i++;
     }
@@ -297,6 +281,7 @@ private:
             PrintLine(1);
             return;
         }
+
         pattern(n / 2);
         PrintLine(n);
         pattern(n / 2);
