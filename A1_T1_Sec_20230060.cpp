@@ -190,14 +190,14 @@ private:
             scores.emplace_back(stoi(score), player);
             sort(scores.begin(), scores.end());
             reverse(scores.begin(), scores.end());
-            if(scores.size() > 10)
+            while(scores.size() > 10)
             {
                 scores.pop_back();
             }
         }
 
         cout << "Top 10 Players\n";
-        for(int i = 1; i <= stoi(NumOfPlayers); i++)
+        for(int i = 1; i <= min(10, stoi(NumOfPlayers)); i++)
         {
             cout << "Player " << i << ": " << scores[i - 1].second << ' ' << scores[i - 1].first << '\n';
         }
@@ -240,8 +240,66 @@ private:
                 }
             }
         }
+    }
 
+    int m = 0;
 
+    void PrintLine(int n)
+    {
+        static int i = 0;
+
+        if(n == 1)
+        {
+            for(int j = 0; j < i; j++)
+            {
+                cout << ' ';
+            }
+            cout << "*\n";
+        }
+        else if(i > n)
+        {
+            if(i > n)
+            {
+                for(int j = 0; j < i - n + 1; j++)
+                {
+                    cout << ' ';
+                }
+            }
+            else
+            {
+                for(int j = 0; j < i - 1; j++)
+                {
+                    cout << ' ';
+                }
+            }
+            for(int j = 0; j < n; j++)
+            {
+                cout << "* ";
+            }
+            cout << "\n";
+        }
+        else
+        {
+            for(int j = 0; j < n; j++)
+            {
+                cout << "* ";
+            }
+            cout << "\n";
+        }
+
+        i++;
+    }
+
+    void pattern(int n)
+    {
+        if(n <= 1)
+        {
+            PrintLine(1);
+            return;
+        }
+        pattern(n / 2);
+        PrintLine(n);
+        pattern(n / 2);
     }
 
     void ManageChoices()
@@ -254,6 +312,18 @@ private:
         {
             Top10Players();
         }
+        else if(choice == "3")
+        {
+            string n;
+            cout << "Input a Number You wanna see his Fatal Pattern\n";
+            cin >> n;
+            while(!digits(n))
+            {
+                cout << "Please Input a Number\n";
+                cin >> n;
+            }
+            pattern(stoi(n));
+        }
     }
 
 public:
@@ -265,8 +335,8 @@ public:
         cout << "Hello, This is our sheet, It does some programs and solves some problems\n"
                 "Choose the number of the problem You want\n"
                 "1: The male speech to inclusive speech converter\n"
-                "2: \n"
-                "3: \n"
+                "2: Top 10 Scores\n"
+                "3: Fatal Pattern\n"
                 "4: \n";
 
         do
