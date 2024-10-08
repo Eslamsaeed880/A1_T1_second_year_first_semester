@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <fstream>
 
 using namespace std;
 
@@ -287,6 +288,111 @@ private:
         pattern(n / 2);
     }
 
+    void CharByChar(ofstream &f1, ofstream &f2, const string& s1, const string& s2)
+    {
+
+        string CountLine;
+        cout << "How many lines you want ?\n";
+        cin >> CountLine;
+
+        while (!digits(CountLine))
+        {
+            cout << "Please Input a number\n";
+            cin >> CountLine;
+        }
+
+        int CountLine1 = stoi(CountLine);
+        cin.ignore();
+        cout << "File 1:\n";
+
+        for(int i = 0; i < CountLine1; i++)
+        {
+            string s;
+            getline(cin,s);
+            f1 << s << '\n';
+        }
+
+        cout << "File 2:\n";
+
+        for(int i = 0; i < CountLine1; i++)
+        {
+            string s;
+            getline(cin,s);
+            f2 << s << '\n';
+        }
+
+        f1.close();
+        f2.close();
+
+        ifstream ff1(s1), ff2(s2);
+
+        if (!ff1 || !ff2) {
+            cout << "Error: Unable to open one or both files for reading.\n";
+            return;
+        }
+
+        string line1, line2;
+        int count = 0;
+
+        while (getline(ff1, line1) && getline(ff2, line2)) {
+            count++;
+            if (line1 != line2) {
+                cout << "Files differ at line " << count << ":\n";
+                cout << "File 1: " << line1 << '\n';
+                cout << "File 2: " << line2 << '\n';
+                return;
+            }
+        }
+
+        cout << "Files are identical (character by character).\n";
+
+        ff1.close();
+        ff2.close();
+    }
+
+    void WordByWord(ofstream &f1, ofstream &f2, const string& s1, const string& s2)
+    {
+
+    }
+
+    void FileComparison()
+    {
+        ofstream file1, file2;
+        string s1, s2, Choice = "0";
+//        cout << "File 1:";
+//        cin >> s1;
+        file1.open("eslam.txt");
+//        cout << "File 2:";
+//        cin >> s2;
+        file2.open("eslam2.txt");
+
+        if(!file1 || !file2)
+        {
+            cout << "Unable to open files\n";
+            return;
+        }
+        cout << "Do You wanna compare it char by char or word by word ?\n"
+                "1) Char by char\n"
+                "2) word by word\n";
+
+        while(Choice != "1" && Choice != "2")
+        {
+            cout << "Choose 1 or 2\n";
+            cin >> Choice;
+        }
+
+        if(Choice == "1")
+        {
+            CharByChar(file1, file2, "eslam.txt", "eslam2.txt");
+        }
+        else
+        {
+            WordByWord(file1, file2, "eslam.txt", "eslam2.txt");
+        }
+        file1.close();
+        file2.close();
+    }
+
     void ManageChoices()
     {
         if(choice == "1")
@@ -308,6 +414,10 @@ private:
                 cin >> n;
             }
             pattern(stoi(n));
+        }
+        else if(choice == "4")
+        {
+            FileComparison();
         }
     }
 
