@@ -11,7 +11,23 @@ using namespace std;
 // Section: S21
 // ID: 20230060
 // Date 11 oct 2024
-// Detailed explanation of the file and how program works ...
+
+
+/*
+    This program offers a menu with four options to choose from:
+
+    Convert Male to Inclusive Speech: You enter a sentence, and it replaces male-specific
+    pronouns like "he" or "him" with both-gender pronouns ("he or she" or "him or her").
+
+    Top 10 Scores: You input players' names and their scores, and it ranks the top 10 players.
+    You can also search for a player's highest score.
+
+    Fractal Pattern (Fatal Pattern): You input a number, and it prints a fractal pattern using stars (*).
+
+    File Comparison: You compare two text files either character by character or word by word to check for differences.
+
+    The program ends with a goodbye message, and you can choose to run it again.
+*/
 
 class objectives
 {
