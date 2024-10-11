@@ -7,12 +7,10 @@
 using namespace std;
 
 // File: A1_T1_Sec_20230060
-// Purpose:
-// Author:
-// Section:
-// ID:
-// TA:
-// Date 8 oct 2024
+// Author: Eslam Saeed Hamdy Alshreef
+// Section: S21
+// ID: 20230060
+// Date 11 oct 2024
 // Detailed explanation of the file and how program works ...
 
 class objectives
@@ -158,6 +156,8 @@ private:
                 cout << words[i] << " ";
             }
         }
+
+        cout << '\n';
     }
 
     void Top10Players()
@@ -288,48 +288,8 @@ private:
         pattern(n / 2);
     }
 
-    void CharByChar(ofstream &f1, ofstream &f2, const string& s1, const string& s2)
+    void CharByChar(ifstream &ff1, ifstream &ff2, const string& s1, const string& s2)
     {
-
-        string CountLine;
-        cout << "How many lines you want ?\n";
-        cin >> CountLine;
-
-        while (!digits(CountLine))
-        {
-            cout << "Please Input a number\n";
-            cin >> CountLine;
-        }
-
-        int CountLine1 = stoi(CountLine);
-        cin.ignore();
-        cout << "File 1:\n";
-
-        for(int i = 0; i < CountLine1; i++)
-        {
-            string s;
-            getline(cin,s);
-            f1 << s << '\n';
-        }
-
-        cout << "File 2:\n";
-
-        for(int i = 0; i < CountLine1; i++)
-        {
-            string s;
-            getline(cin,s);
-            f2 << s << '\n';
-        }
-
-        f1.close();
-        f2.close();
-
-        ifstream ff1(s1), ff2(s2);
-
-        if (!ff1 || !ff2) {
-            cout << "Error: Unable to open one or both files for reading.\n";
-            return;
-        }
 
         string line1, line2;
         int count = 0;
@@ -350,21 +310,36 @@ private:
         ff2.close();
     }
 
-    void WordByWord(ofstream &f1, ofstream &f2, const string& s1, const string& s2)
+    void WordByWord(ifstream &f1, ifstream &f2, const string& s1, const string& s2)
     {
+        string word1, word2;
+        int WordPosition = 1;
 
+        while (f1 >> word1 && f2 >> word2)
+        {
+            if (word1 != word2)
+            {
+                cout << "Files differ at (word position " << WordPosition << "):\n";
+                cout << "File 1: " << word1 << '\n';
+                cout << "File 2: " << word2 << '\n';
+                return;
+            }
+            WordPosition++;
+        }
+
+        cout << "Files are identical (Word by Word).\n";
     }
 
     void FileComparison()
     {
         ofstream file1, file2;
         string s1, s2, Choice = "0";
-//        cout << "File 1:";
-//        cin >> s1;
-        file1.open("eslam.txt");
-//        cout << "File 2:";
-//        cin >> s2;
-        file2.open("eslam2.txt");
+        cout << "File 1:";
+        cin >> s1;
+        file1.open(s1);
+        cout << "File 2:";
+        cin >> s2;
+        file2.open(s2);
 
         if(!file1 || !file2)
         {
@@ -381,16 +356,85 @@ private:
             cin >> Choice;
         }
 
+        string CountLine;
+        cout << "How many lines you want ?\n";
+        cin >> CountLine;
+
+        while (!digits(CountLine))
+        {
+            cout << "Please Input a number\n";
+            cin >> CountLine;
+        }
+
+        int CountLine1 = stoi(CountLine);
+        cin.ignore();
+        cout << "File 1:\n";
+
+        for(int i = 0; i < CountLine1; i++)
+        {
+            string s;
+            getline(cin,s);
+            file1 << s << '\n';
+        }
+
+        cout << "File 2:\n";
+
+        for(int i = 0; i < CountLine1; i++)
+        {
+            string s;
+            getline(cin,s);
+            file2 << s << '\n';
+        }
+
+        file1.close();
+        file2.close();
+
+        ifstream ff1("eslam.txt"), ff2("eslam2.txt");
+
+        if (!ff1 || !ff2) {
+            cout << "Error: Unable to open one or both files for reading.\n";
+            return;
+        }
+
         if(Choice == "1")
         {
-            CharByChar(file1, file2, "eslam.txt", "eslam2.txt");
+            CharByChar(ff1, ff2, "eslam.txt", "eslam2.txt");
         }
         else
         {
-            WordByWord(file1, file2, "eslam.txt", "eslam2.txt");
+            WordByWord(ff1, ff2, "eslam.txt", "eslam2.txt");
         }
-        file1.close();
-        file2.close();
+        ff1.close();
+        ff2.close();
+    }
+
+    void again()
+    {
+        hello();
+        ManageChoices();
+        GoodBye();
+    }
+
+public:
+    objectives(){choice = "";};
+    ~objectives(){};
+
+    void hello()
+    {
+        cout << "Hello, This is our sheet, It does some programs and solves some problems\n"
+                "Choose the number of the problem You want\n"
+                "1: The male speech to inclusive speech converter\n"
+                "2: Top 10 Scores\n"
+                "3: Fatal Pattern\n"
+                "4: File Comparison\n";
+
+        do
+        {
+            cout << "Choose a Number from 1 to 4\n";
+            cin >> choice;
+        }
+        while(choice < "1" || choice > "4");
+        cin.ignore();
     }
 
     void ManageChoices()
@@ -421,34 +465,36 @@ private:
         }
     }
 
-public:
-    objectives(){choice = "";};
-    ~objectives(){};
-
-    void hello()
+    void GoodBye()
     {
-        cout << "Hello, This is our sheet, It does some programs and solves some problems\n"
-                "Choose the number of the problem You want\n"
-                "1: The male speech to inclusive speech converter\n"
-                "2: Top 10 Scores\n"
-                "3: Fatal Pattern\n"
-                "4: \n";
+        string Choice;
 
-        do
+        cout << "Do You wanna operate the project again ?\n"
+                "1) Yes\n"
+                "2) No\n";
+        cin >> Choice;
+
+        while(Choice != "1" && Choice != "2")
         {
-            cout << "Choose a Number from 1 to 4\n";
-            cin >> choice;
+            cout << "Input 1 | 2 Please\n";
+            cin >> Choice;
         }
-        while(choice < "1" || choice > "4");
-        cin.ignore();
-        ManageChoices();
+
+        if(Choice == "1")
+        {
+            again();
+        }
+        else
+        {
+            cout << "Good Bye!\n";
+        }
     }
-
-
 };
 
 int main()
 {
     objectives ob;
     ob.hello();
+    ob.ManageChoices();
+    ob.GoodBye();
 }
