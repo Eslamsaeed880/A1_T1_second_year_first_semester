@@ -259,24 +259,25 @@ private:
         }
     }
 
+    int k = 0;
+
     void PrintLine(int n)
     {
-        static int i = 0;
 
         if(n == 1)
         {
-            for(int j = 0; j < i; j++)
+            for(int j = 0; j < k; j++)
             {
                 cout << ' ';
             }
             cout << "*\n";
-            i++;
+            k++;
             return;
         }
-        else if(i > n)
+        else if(k > n)
         {
 
-            for(int j = 0; j < i - n + 1; j++)
+            for(int j = 0; j < k - n + 1; j++)
             {
                 cout << ' ';
             }
@@ -288,7 +289,7 @@ private:
         }
         cout << "\n";
 
-        i++;
+        k++;
     }
 
     void pattern(int n)
@@ -466,11 +467,12 @@ public:
         else if(choice == "3")
         {
             string n;
-            cout << "Input a Number You wanna see his Fatal Pattern\n";
+            k = 0;
+            cout << "Input a Number from the powers of 2 You wanna see his Fatal Pattern\n";
             cin >> n;
-            while(!digits(n))
+            while(!digits(n) || (n != "2" && n != "1" && n != "4" && n != "8" && n != "16" && n != "32"))
             {
-                cout << "Please Input a Number\n";
+                cout << "Please Input a Number from the powers of 2 like not more than 32\n";
                 cin >> n;
             }
             pattern(stoi(n));
